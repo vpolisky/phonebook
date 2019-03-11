@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'phones',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,5 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+
+EXTERNAL_PHONES_API_URL = 'http://www.mocky.io/v2/581335f71000004204abaf83'
