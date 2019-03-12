@@ -3,13 +3,13 @@
     <v-layout row wrap>
 
       <v-flex xs12 md4>
-        <v-text-field label="Filter by name" v-model="name"></v-text-field>
+        <v-text-field label="Filter by name" v-model="name" clearable></v-text-field>
       </v-flex>
       <v-flex xs12 md4>
-        <v-text-field label="Filter by phone number" v-model="phone"></v-text-field>
+        <v-text-field label="Filter by phone number" v-model="phone" clearable></v-text-field>
       </v-flex>
       <v-flex xs12 md4>
-        <v-text-field label="Filter by address" v-model="address"></v-text-field>
+        <v-text-field label="Filter by address" v-model="address" clearable></v-text-field>
       </v-flex>
 
     </v-layout>
