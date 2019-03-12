@@ -99,6 +99,16 @@ class APITest(APITestCase):
             self.assertIn(data['name'], ['Test One', 'Test Three'])
 
     @patch('requests.get', mock_get_data_from_api)
+    def test_api_returns_correct_filtered_results_with_multiple_values_for_same_query_parameter(self):
+        url = f'{self.url}?name=Test One&name=Test Two'
+        response = self.client.get(url)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(2, len(response.data))
+
+        for data in response.data:
+            self.assertIn(data['name'], ['Test One', 'Test Two'])
+
+    @patch('requests.get', mock_get_data_from_api)
     def test_api_works_with_empty_query_params(self):
         url = f'{self.url}?name='
         response = self.client.get(url)

@@ -7,7 +7,7 @@ Contact data is retrieved from http://www.mocky.io/v2/581335f71000004204abaf83 o
 data to the database and to use the database for generating responses, but it seemed to me rather that calling the API
 on each request is required.]
 
-Repeated queries are handled as AND (e.g. ?name=name1&name=name2 returns contacts such that name1 and name2 are parts
+Repeated queries are handled as OR (e.g. ?name=name1&name=name2 returns contacts such that name1 OR name2 are parts
 of their names). Empty queries are handled as missing.
 '''
 
@@ -28,8 +28,8 @@ QUERY_PARAM_MAP = {
 }
 
 
-def check_query(contact, name, value):
-    return value.lower() in contact[QUERY_PARAM_MAP[name]].lower()
+def check_query(contact, name, values_list):
+    return any([value.lower() in contact[QUERY_PARAM_MAP[name]].lower() for value in values_list])
 
 
 def filter_contacts(contacts, query_params):
@@ -38,9 +38,9 @@ def filter_contacts(contacts, query_params):
     for contact in contacts:
         should_be_included = True
 
-        for name, value in query_params.items():
-            if value:
-                should_be_included = should_be_included & check_query(contact, name, value)
+        for name, values_list in query_params.lists():
+            if values_list:
+                should_be_included = should_be_included and check_query(contact, name, values_list)
 
         if should_be_included:
             result.append(contact)

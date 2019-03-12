@@ -37,13 +37,14 @@ class UnitTest(TestCase):
             'address': 'some address',
         }
 
-        self.assertTrue(check_query(contact_1, 'name', 'nam'))
-        self.assertTrue(check_query(contact_2, 'name', 'Nam'))
-        self.assertFalse(check_query(contact_2, 'name', 'smth'))
-        self.assertTrue(check_query(contact_1, 'phone', '44'))
-        self.assertFalse(check_query(contact_1, 'phone', '3333'))
-        self.assertTrue(check_query(contact_1, 'address', 'OMe'))
-        self.assertFalse(check_query(contact_1, 'address', 'someaddress'))
+        self.assertTrue(check_query(contact_1, 'name', ['nam']))
+        self.assertTrue(check_query(contact_2, 'name', ['Nam']))
+        self.assertFalse(check_query(contact_2, 'name', ['smth']))
+        self.assertTrue(check_query(contact_1, 'phone', ['44']))
+        self.assertFalse(check_query(contact_1, 'phone', ['3333']))
+        self.assertTrue(check_query(contact_1, 'address', ['OMe']))
+        self.assertFalse(check_query(contact_1, 'address', ['someaddress']))
+        self.assertTrue(check_query(contact_1, 'name', ['name', 'Name']))
 
     def test_filter_contacts(self):
         query_params = QueryDict('name=Test One')
@@ -80,3 +81,16 @@ class UnitTest(TestCase):
 
         query_params = QueryDict('phone=2&address=first address')
         self.assertEqual([], filter_contacts(test_data, query_params))
+
+        query_params = QueryDict('phone=1&phone=2')
+        self.assertEqual([
+            {
+                'name': 'Test One',
+                'phone_number': '1',
+                'address': 'first address',
+            },
+            {
+                'name': 'Test Two',
+                'phone_number': '2',
+                'address': 'second address',
+            }], filter_contacts(test_data, query_params))
