@@ -10,5 +10,5 @@ Furthermore, the client app was developed and tested with _Chrome 72_. So, it sh
 # How to run
 
 + in project's root directory run: `docker-compose up`
++ it can take few minutes until the app starts running
 + go to `localhost:8000`
-
